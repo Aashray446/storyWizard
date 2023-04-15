@@ -1,10 +1,10 @@
-
-import './App.css'
-import { Mike } from './components/mike'
-
+import "./App.css";
+import { Mike } from "./components/mike";
+import S1 from "./assets/images/s1.jpeg";
+import S2 from "./assets/images/s2.jpeg";
+import S3 from "./assets/images/s3.jpeg";
 
 function App() {
-
   return (
     <div className="App">
       <nav className="flex justify-between items-center p-4">
@@ -13,16 +13,58 @@ function App() {
         </div>
       </nav>
       <div className="grid lg:grid-cols-5 gap-4 grid-cols-1">
-        <div className="col-span-2" style={{height: '100vh'}}>
+        <div className="col-span-2" style={{ height: "100vh" }}>
           <Mike></Mike>
-  
-      </div>
-      <div className="col-span-3">
-         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla mollitia consequuntur numquam laboriosam ducimus amet totam nobis eaque saepe ipsam doloremque, excepturi, quis ullam. Amet, ut. Repellendus dolore earum tempore distinctio. At cumque amet nisi commodi autem quod numquam nihil possimus praesentium, voluptas non sapiente eos, facilis animi cupiditate enim iusto unde saepe! Officiis, ad corrupti quasi fugit eum soluta suscipit expedita ipsum rem quos atque rerum natus. Illo earum eligendi corrupti! Quod, consectetur harum. Expedita fuga error ducimus optio sed nulla laboriosam nostrum praesentium quasi unde illo molestias, voluptate, dolores, nesciunt dolorum. Quod laborum quam dignissimos quia? Aspernatur, nesciunt!  
-      </div>
+        </div>
+        <div className="col-span-3 text-white">
+          <div className="col-span-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 gap-4 text-white px-5">
+            <div
+              className=" p-5 rounded-lg"
+              style={{
+                background: `url(${S1})`,
+                backgroundSize: "cover",
+              }}
+            >
+              <h2 className="text-2xl font-bold">Story Preview 1</h2>
+              <p className="mt-2">
+                Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                Tempore soluta odit, mollitia enim distinctio quia totam numquam
+                inventore est maxime officia, expedita incidunt consequuntur
+                eveniet porro, aut eaque cum voluptatibus?
+              </p>
+            </div>
+            <div
+              className="p-5 rounded-lg"
+              style={{ background: `url(${S2})`, backgroundSize: "cover" }}
+            >
+              <h2 className="text-2xl font-bold">Story Preview 2</h2>
+              <p className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                Voluptas necessitatibus eveniet aliquam hic quis quaerat quo,
+                magni magnam harum quae nesciunt ullam impedit fugiat! Adipisci
+                voluptatum assumenda porro eum aut.
+              </p>
+            </div>
+            <div
+              className=" p-5 rounded-lg"
+              style={{
+                background: `url(${S3})`,
+                backgroundSize: "cover",
+              }}
+            >
+              <h2 className="text-2xl font-bold">Story Preview 2</h2>
+              <p className="mt-2">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est
+                ipsum tempora animi consequuntur quos veniam quibusdam sed.
+                Perspiciatis ab aspernatur corrupti ducimus! Exercitationem
+                animi neque aliquid ad dolores dolorum reiciendis!
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
