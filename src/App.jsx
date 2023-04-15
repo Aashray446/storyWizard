@@ -16,7 +16,7 @@ function App() {
           <Mike></Mike>
         </div>
         <div className="col-span-3 text-white">
-          <div className="col-span-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 text-white px-5">
+          <div className="col-span-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 w-full text-white px-5">
           <StoryCard heading="The lion King" content="Lorem ipsum bolayr ito s..." imgSrc={s1}  ></StoryCard>
           <StoryCard heading="The lion King" content="Lorem ipsum bolayr ito sir..." imgSrc={s1}  ></StoryCard>
           <StoryCard heading="The lion King" content="Lorem ipsum bolayr ito sir..." imgSrc={s1}  ></StoryCard>
