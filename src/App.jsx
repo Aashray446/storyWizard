@@ -1,7 +1,7 @@
 import "./App.css";
 import { Mike } from "./components/mike";
 import StoryCard from "./components/storyCard";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { fetchStories } from "./services/stories";
 function App() {
 
