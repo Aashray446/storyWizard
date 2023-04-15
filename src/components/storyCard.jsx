@@ -1,12 +1,21 @@
 import React from "react";
 
 
-const storyCard = ({ children, className }) => {
+const StoryCard = ({ heading, content, imgSrc }) => {
     return (
-        <div className={`h-full w-full bg-royal-blue rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-30 border border-gray-100 ${className}`} >
-            {children}
+        <div className="p-4 w rounded-lg">
+        <div className="relative">
+            <img src={imgSrc} className="w-64 h-64 rounded-lg" />
+        <div className="absolute card bottom-0">
+        <h2 className="text-2xl p-1 font-bold">{heading}</h2>
+        <p className="p-2 truncate line-clamp-2">
+            {content}
+        </p>
         </div>
+        </div>
+       
+      </div>
     );
 }
 
-export default storyCard;
+export default StoryCard;
