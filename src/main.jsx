@@ -15,8 +15,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/story",
-    element : <Story />
+    path: "/story/:id",
+    element: <Story />
   }
 
 ]);
@@ -24,6 +24,6 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Nav></Nav>
-  <RouterProvider router={router} />
+    <RouterProvider router={router} />
   </React.StrictMode>,
 )
