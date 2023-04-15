@@ -13,3 +13,7 @@ body {
    left: 50%;
    transform: translate(-10%, -80%);
 }
+
+.card {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
+}
