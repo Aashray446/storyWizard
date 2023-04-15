@@ -11,6 +11,7 @@
 
 body {
   background-color: #2e2b49;
+  min-height: 100vh;
 }
 
 .center {
@@ -23,7 +24,6 @@ body {
 .card {
   background: linear-gradient(to top, rgba(0, 0, 0, 0.95), transparent);
 }
-
 
 .botón {
   align-items: center;
