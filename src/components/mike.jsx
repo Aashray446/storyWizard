@@ -1,19 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import microphone from "../assets/microphone.svg";
-
+import { generateStory } from "../services/stories";
 export const Mike = () => {
+
+  const [textInput, setTextInput] = useState("");
+
+  const handleChange = (e) => {
+    setTextInput(e.target.value);
+  };
+
+  const handleClick = () => {
+    console.log(textInput);
+    generateStory(textInput).then((res) => {
+      console.log(res);
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center h-screen overflow-hidden group">
-      <div className="flex justify-center items-center h-48 w-48 rounded-full bg-gradient-to-r from-brilliant-rose to-energy-yellow transition-all duration-500 ease-in-out transform group-hover:scale-110">
-        <img src={microphone} className="w-28 h-28" />
+      <div className="flex justify-center items-center h-48 w-48 rounded-full bg-gradient-to-r from-brilliant-rose to-energy-yellow transition-all duration-500 ease-in-out transform group-hover:scale-110 hover:cursor-pointer">
+        <img src={microphone} className="w-28 h-28 " />
       </div>
       <div className="relative mt-8 flex justify-between w-1/2">
         <input
           type="text"
           placeholder="Search..."
           className="bg-white bg-opacity-20 focus:outline-none h-12 px-4 rounded-full w-96 text-white font-bold"
+          onChange={handleChange}
         />
-        <button>
+        <button onClick={handleClick} >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 512 512"

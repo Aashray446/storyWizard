@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "clean-hangar-383815",
+  "private_key_id": "687a2994ae53c9a5b2a5ba68905484c8df08d018",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDCDakGWmEbIzNA\n231fI/bW27YhjpKaK3wv0CpPVRCgr9Nr3IPdw870Hfd+5DMkJqihytmN8yv2tPfB\nkittS4iUTmyOrk3AHwBDZuYdA5r35IF9oI1MR4+nIBDQcdw0ap9pfXwc8MW1E7ot\n4wev80L48mBoMjbW/6vfrQicd8WZGSjkSXvTul4hl2JT15rFh3SlsrmFmXsZdvGh\nWglqCzhOJMDY1eGheG1jAmXTs4Zgc4WpXK0E3JgL3nNxEKTsXYte4obsDmLDpfCB\n2239lsW2i8xFVj/69lho0L1Ymy9Z1zdD5wOL159rMbD5Z0i0QO49ymj+aEMu/GJb\nK1ZhCm9JAgMBAAECggEAH4IapEKaNXmmhveR6Jf31T+GgqCviCMwaQ5f7agDvlDe\nP3YQ3o9pHopxFw7piOCoDTaD0usdg9OII6DetpfcR4G2WbJ5Qw0lkfbMEqufsXQj\nsb4XGJV0AJsRxS6qURkmOiQwZKiUNDMi+J6+LvZiNPbHQD6LA1IvL5ndEJQtUY6+\nUEQyEj6DVWKUJI7gZn2M/uD0F7JCLwyNEnir9dlMS36mhAQ/i3ib43h0FYZjg4IH\ng7TKx7OFTbEQNCkrxjJysbXFSzpmI0k5Ey9Vna1b+dypOx6CF0BcT1oGGQJuFgjG\n92a0PkRO8p4eCFBHxYRDyNuUudbDAy0XWNx2HrqmAwKBgQDogzhlW+Py38IddJnR\nWGMGLmTM7z1RhP9k+XcFc99yjJBPQQijkuKktqu1G+aeo4Qxdb5CrMgCOUhz9ufO\ndjFmJsuC/ssnsaYAp8Hh9I19BH+mjlNzA1yoXfdFrEWxSZkMebwKZEQnKIJ9IH3F\n/THP/4fWVB81eFFRnSEoUfETjwKBgQDVp+JCfJ51lpsY6FvS2RoAvtQfJgwNxSRH\nisNn0eDGE/IyErec/JUV6G4Z2Ib9OU+ppO0j0tnGy2l3TFpfrDyB0hhMXjZGZZ52\nlpi6U1/kLpDatn3xJsY3dgWM0aWAXJ7nAutgtPPqSW9Zq+CBzUBRB5i6ly4TnwRn\nBIp4l7QDpwKBgQC4BIJx1dQGuIjM/ydtw+I7ViR4/S8ugXAP3lAQhLBn3E+qKfJI\nY0v0yI4E/Fv9WbSZ4HIAGvcAq41oGhVEFc7q5fFTb4whkjurcRnFVuNT+md8zk/F\nSvfeWOAGyF0v/uueMApevxQhWbJMjZZ9R/JQiBBd1J4Ol3bkfNNtMcz2iQKBgQC3\npmhROCdI8hz9KvWK5rx4OY/B+oVP7M5DhJ50hi5MdOaxbe9QTLilrTW+l6Vo0rOM\nIc0JBvvU6hIMzp+8LyOPf5UNR8oldsHgM5CyUGpTjEdNCKJ3ABpPn+4jXi2BiZu4\n/IRwivpCv76r+JaxXElVnU8FzF951C0HlBqmj9fXbwKBgCDrfwe6zso136FzkLdv\n4aQIYvTAlBS7AYve/WMn2EaN5Mx9RddJV7uWjTI+uaTzbYPDtA7PFHByKMeHd9gS\nb0EwgP50X2LoTsB1jVo6bpXiUypc+DzzCRLgm/atTtt1ivbL6YJdV+yQAnFFvcLI\nuKkb9kgBc8PlttIdtTNk4/Yo\n-----END PRIVATE KEY-----\n",
+  "client_email": "storywizard@clean-hangar-383815.iam.gserviceaccount.com",
+  "client_id": "117902335118860920952",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/storywizard%40clean-hangar-383815.iam.gserviceaccount.com"
+}
