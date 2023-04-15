@@ -9,16 +9,24 @@ export const Story = () => {
   const [isActive, setIsActive] = useState(false);
   const [story, setStory] = useState({});
   const [storyLines, setStoryLines] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = React.useRef(null);
 
   useLayoutEffect(() => {
     getStory(id).then((res) => {
       setStory(res.story[0]);
       setStoryLines(res.story[0].story.split("\n\n"));
-      // console.log(res.story[0]);
+      console.log(story)
     });
   }, []);
 
   const toggleClass = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play();
+    }
+    setIsPlaying(!isPlaying);
     setIsActive(!isActive);
   };
 
@@ -90,6 +98,7 @@ export const Story = () => {
           </div>
         </div>
       </div>
+      <audio ref={audioRef} src={story.audio} />
     </>
   );
 };
