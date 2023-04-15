@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+body {
+    background-color: #2e2b49;
+}
+
+.center {
+   position: relative;
+   top: 50%;
+   left: 50%;
+   transform: translate(-10%, -80%);
+}
