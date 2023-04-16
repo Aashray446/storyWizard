@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { getStory } from "../services/stories";
 import { askFollowUp, getFollowUp } from "../services/stories";
 
-
 export const Story = () => {
   const { id } = useParams();
   const [isActive, setIsActive] = useState(false);
@@ -19,15 +18,18 @@ export const Story = () => {
   const [audioBlob, setAudioBlob] = useState(null);
   const [audioTime, setAudioTime] = useState(0);
 
+  const [loading, isloading] = useState(false);
+
   let mediaRecorder = null;
 
   const startRecording = () => {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-      .then(stream => {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
+      .then((stream) => {
         mediaRecorder = new MediaRecorder(stream);
         const audioChunks = [];
 
-        mediaRecorder.addEventListener("dataavailable", event => {
+        mediaRecorder.addEventListener("dataavailable", (event) => {
           audioChunks.push(event.data);
         });
 
@@ -43,9 +45,8 @@ export const Story = () => {
           stopRecording();
           sendAudio();
         }, 5000);
-
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   const stopRecording = () => {
@@ -55,18 +56,19 @@ export const Story = () => {
 
   const sendAudio = () => {
     // generate a unqiue session id
-    const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+    const sessionId =
+      Math.random().toString(36).substring(2, 15) +
+      Math.random().toString(36).substring(2, 15);
     askFollowUp(id, audioBlob, sessionId).then((res) => {
-      console.log(res)
+      console.log(res);
     });
-
   };
 
   useLayoutEffect(() => {
     getStory(id).then((res) => {
       setStory(res.story[0]);
       setStoryLines(res.story[0].story.split("\n\n"));
-      console.log(story)
+      console.log(story);
     });
   }, []);
 
@@ -80,13 +82,10 @@ export const Story = () => {
     setIsActive(!isActive);
   };
 
-
   const handleMicClick = () => {
-    console.log("mic clicked")
+    console.log("mic clicked");
     startRecording();
-
   };
-
 
   const handleInputChange = (e) => {
     setQuestions(e.target.value);
@@ -94,12 +93,13 @@ export const Story = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    isloading(true);
     setAudioTime(audioRef.current.currentTime);
     getFollowUp(id, questions).then((res) => {
-      console.log(res)
       // set audioRef src to new audio
       audioRef.current.src = res.audio;
       audioRef.current.play();
+      isloading(false);
     });
   };
 
@@ -135,7 +135,7 @@ export const Story = () => {
         </div>
       </div>
       <div className="fixed bottom-0 left-0 w-full h-16 m-8 flex justify-around items-center">
-        <div className="absolute left-1/2 transform -translate-x-1/2 flex">
+        <div className="absolute left-1/2 transform -translate-x-1/2 flex ">
           {/* <div className="botón" onClick={handleMicClick}>
             <div className="fondo">
               <svg
@@ -158,20 +158,27 @@ export const Story = () => {
               className="bg-white bg-opacity-40 focus:outline-none h-12 px-4 rounded-full w-96 text-black font-bold"
               onChange={handleInputChange}
             />
-            <button onClick={handleFormSubmit} >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                className="relative -left-16 h-10 text-white"
-              >
-                <path
-                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
-                  fill="#fff"
-                />
-              </svg>
-            </button>
+            {!loading ? (
+              <button onClick={handleFormSubmit}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 512 512"
+                  className="relative -left-16 h-10 text-white"
+                >
+                  <path
+                    d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                    fill="#fff"
+                  />
+                </svg>
+              </button>
+            ) : (
+              <div class="lds-dual-ring relative -left-16 mb-5 h-10"></div>
+            )}
           </div>
-          <div className={` botón ${isActive ? "active" : ""}`} onClick={toggleClass} >
+          <div
+            className={` botón ${isActive ? "active" : ""}`}
+            onClick={toggleClass}
+          >
             <div className="fondo"></div>
             <div className="icono">
               <div
