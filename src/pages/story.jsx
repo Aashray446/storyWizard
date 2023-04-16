@@ -3,7 +3,8 @@ import { useState } from "react";
 // get param from url
 import { useParams } from "react-router-dom";
 import { getStory } from "../services/stories";
-import { askFollowUp } from "../services/stories";
+import { askFollowUp, getFollowUp } from "../services/stories";
+
 
 export const Story = () => {
   const { id } = useParams();
@@ -12,9 +13,11 @@ export const Story = () => {
   const [storyLines, setStoryLines] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = React.useRef(null);
+  const [questions, setQuestions] = useState("");
 
   const [recording, setRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
+  const [audioTime, setAudioTime] = useState(0);
 
   let mediaRecorder = null;
 
@@ -53,7 +56,6 @@ export const Story = () => {
   const sendAudio = () => {
     // generate a unqiue session id
     const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-
     askFollowUp(id, audioBlob, sessionId).then((res) => {
       console.log(res)
     });
@@ -85,6 +87,28 @@ export const Story = () => {
 
   };
 
+
+  const handleInputChange = (e) => {
+    setQuestions(e.target.value);
+  };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    setAudioTime(audioRef.current.currentTime);
+    getFollowUp(id, questions).then((res) => {
+      console.log(res)
+      // set audioRef src to new audio
+      audioRef.current.src = res.audio;
+      audioRef.current.play();
+    });
+  };
+
+  const loopAudio = () => {
+    audioRef.current.src = story.audio;
+    audioRef.current.currentTime = audioTime;
+    audioRef.current.play();
+  };
+
   return (
     <>
       <div className="grid lg:grid-cols-5 gap-4 grid-cols-1 font-poiret_one mx-10 min-h-screen sm:max-h-fit">
@@ -112,7 +136,7 @@ export const Story = () => {
       </div>
       <div className="fixed bottom-0 left-0 w-full h-16 m-8 flex justify-around items-center">
         <div className="absolute left-1/2 transform -translate-x-1/2 flex">
-          <div className="botón" onClick={handleMicClick}>
+          {/* <div className="botón" onClick={handleMicClick}>
             <div className="fondo">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -125,11 +149,29 @@ export const Story = () => {
                 />
               </svg>
             </div>
+          </div> */}
+          <div className="relative flex justify-center items-center h-screen">
+            {/* <input type="text" className="bg-white rounded-lg w-80 h-10 p-4" placeholder="Ask Questions" /> */}
+            <input
+              type="text"
+              placeholder="Ask any question..."
+              className="bg-white bg-opacity-40 focus:outline-none h-12 px-4 rounded-full w-96 text-black font-bold"
+              onChange={handleInputChange}
+            />
+            <button onClick={handleFormSubmit} >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+                className="relative -left-16 h-10 text-white"
+              >
+                <path
+                  d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"
+                  fill="#fff"
+                />
+              </svg>
+            </button>
           </div>
-          <div
-            className={` botón ${isActive ? "active" : ""}`}
-            onClick={toggleClass}
-          >
+          <div className={` botón ${isActive ? "active" : ""}`} onClick={toggleClass} >
             <div className="fondo"></div>
             <div className="icono">
               <div
@@ -153,7 +195,7 @@ export const Story = () => {
           </div>
         </div>
       </div>
-      <audio ref={audioRef} src={story.audio} />
+      <audio ref={audioRef} src={story.audio} onEnded={loopAudio} />
     </>
   );
 };
