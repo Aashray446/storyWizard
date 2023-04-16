@@ -1,4 +1,5 @@
 import { baseUrl } from "./config"
+import axios from 'axios';
 
 export const fetchStories = async () => {
     const count = await getStoryCount();
@@ -27,3 +28,15 @@ const getStoryCount = async () => {
     return count.count;
 }
 
+
+
+export const askFollowUp = async (storyId, audio, sessionId) => {
+    // post in multipart form data
+    const formData = new FormData();
+    formData.append('audio', audio);
+    formData.append('session_id', sessionId);
+    formData.append('story_id', storyId);
+    const response = await axios.post(`${baseUrl}/post_followup_audio`, formData);
+    const data = await response.data;
+    return data;
+}

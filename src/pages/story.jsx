@@ -3,6 +3,7 @@ import { useState } from "react";
 // get param from url
 import { useParams } from "react-router-dom";
 import { getStory } from "../services/stories";
+import { askFollowUp } from "../services/stories";
 
 export const Story = () => {
   const { id } = useParams();
@@ -11,6 +12,53 @@ export const Story = () => {
   const [storyLines, setStoryLines] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = React.useRef(null);
+
+  const [recording, setRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState(null);
+
+  let mediaRecorder = null;
+
+  const startRecording = () => {
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        mediaRecorder = new MediaRecorder(stream);
+        const audioChunks = [];
+
+        mediaRecorder.addEventListener("dataavailable", event => {
+          audioChunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener("stop", () => {
+          const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+          setAudioBlob(audioBlob);
+        });
+
+        mediaRecorder.start();
+        setRecording(true);
+
+        setTimeout(() => {
+          stopRecording();
+          sendAudio();
+        }, 5000);
+
+      })
+      .catch(err => console.log(err));
+  };
+
+  const stopRecording = () => {
+    setRecording(false);
+    mediaRecorder.stop();
+  };
+
+  const sendAudio = () => {
+    // generate a unqiue session id
+    const sessionId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    askFollowUp(id, audioBlob, sessionId).then((res) => {
+      console.log(res)
+    });
+
+  };
 
   useLayoutEffect(() => {
     getStory(id).then((res) => {
@@ -28,6 +76,13 @@ export const Story = () => {
     }
     setIsPlaying(!isPlaying);
     setIsActive(!isActive);
+  };
+
+
+  const handleMicClick = () => {
+    console.log("mic clicked")
+    startRecording();
+
   };
 
   return (
@@ -57,7 +112,7 @@ export const Story = () => {
       </div>
       <div className="fixed bottom-0 left-0 w-full h-16 m-8 flex justify-around items-center">
         <div className="absolute left-1/2 transform -translate-x-1/2 flex">
-          <div className="botón">
+          <div className="botón" onClick={handleMicClick}>
             <div className="fondo">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
