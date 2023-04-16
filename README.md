@@ -37,5 +37,7 @@ Run the following commands in the given order to get the front end running.
 - Axios
 
 ## UI
+![ss1](https://user-images.githubusercontent.com/69245931/232275295-fde1cba0-0619-444c-a7a1-7c91bc24ae97.jpg)
 
-*Insert UI SS*
+![ss2](https://user-images.githubusercontent.com/69245931/232275339-e8e7a489-da56-476f-8a08-d103d23b135e.jpg)
+![ss3](https://user-images.githubusercontent.com/69245931/232275401-21cd873c-cf1d-426a-acec-fa139205e4eb.jpeg)
