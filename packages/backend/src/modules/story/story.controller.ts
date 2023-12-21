@@ -7,6 +7,7 @@ import pick from '../utils/pick';
 import { IOptions } from '../paginate/paginate';
 import * as storyService from './story.service';
 import { logger } from '../logger';
+import config from '../../config/config';
 // import { logger } from '../logger';
 
 export const createStory = catchAsync(async (req: Request, res: Response) => {
@@ -66,7 +67,7 @@ export const genereateStory = catchAsync(async (req: Request, res: Response) => 
   }
   logger.info(story);
   const image = await storyService.generateImageDallE(story.story);
-  story.image = image;
+  story.image = config.clientUrl.concat(image);
   const respone = await storyService.createStory(story);
   res.send(respone.id);
 });

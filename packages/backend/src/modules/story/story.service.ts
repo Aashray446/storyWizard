@@ -1,10 +1,12 @@
 import mongoose from 'mongoose';
 import httpStatus from 'http-status';
+import fs from 'fs';
 import Story from './story.model';
 import { IStoryDoc } from './story.interfaces';
 import { ApiError } from '../errors';
 import { IStoryGeneratorResponse, storyGenerator, Dalle3, questionAnswering, AudioEngine } from '../chatbot';
 import { logger } from '../logger';
+import config from '../../config/config';
 
 /**
  * Create a story
@@ -43,8 +45,13 @@ export const askQuestion = async (question: string, story: string): Promise<stri
    * {"response": "The moral of the story is that it's important to appreciate and be grateful for the things we have, even if they seem ordinary or familiar. It's easy to take things for granted, but we should always remember to be thankful for the special and wonderful things in our lives."}
    */
   const audio = await AudioEngine.generateAudio(questionResponse.response);
-  logger.info(`Audio generated: ${audio}`);
-  return audio;
+
+  // delete the audio file after 30 seconds
+  setTimeout(() => {
+    fs.unlinkSync('./public/'.concat(audio as string));
+  }, 30000);
+
+  return config.clientUrl + audio;
 };
 
 /**
@@ -115,5 +122,5 @@ export const generateImageDallE = async (prompt: string): Promise<any> => {
   // return Dalle3.generateImages(prompt, '1792x1024');
   const imageData = await Dalle3.generateImages(prompt, '1024x1024');
   logger.info(imageData);
-  return imageData.data[0].url;
+  return imageData;
 };

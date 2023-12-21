@@ -2,9 +2,11 @@
 import { OpenAI } from 'openai';
 import { ChatCompletionCreateParamsNonStreaming, ChatCompletionMessageParam } from 'openai/resources/chat';
 import httpStatus from 'http-status';
+import fs from 'fs';
 import config from '../../config/config';
 import { ApiError } from '../errors';
 import { logger } from '../logger';
+import { generateUniqueFileName } from '../utils';
 
 class ChatBot<T> {
   private openai: OpenAI;
@@ -68,14 +70,23 @@ class ChatBot<T> {
   public async generateImages(
     prompt: string,
     size: '256x256' | '512x512' | '1024x1024' | '1792x1024' | '1024x1792' | null
-  ): Promise<any> {
-    return this.openai.images.generate({
+  ): Promise<string> {
+    const data = await this.openai.images.generate({
       prompt: this.prompt[0]!.content + prompt,
       model: this.model,
       n: 1,
-      response_format: 'url',
+      response_format: 'b64_json',
       size,
     });
+    if (data) {
+      const image = data.data.length > 0 && data.data[0] ? data.data[0].b64_json : '';
+      if (image) {
+        const filename = generateUniqueFileName().concat('.jpeg');
+        fs.writeFileSync('./public/'.concat(filename), image, 'base64');
+        return filename;
+      }
+    }
+    return '';
   }
 
   public async generateAudio(text: string): Promise<any> {
@@ -84,7 +95,10 @@ class ChatBot<T> {
       voice: 'alloy',
       input: text,
     });
-    return (await respone).blob();
+    const audio = await (await respone).arrayBuffer();
+    const filename = generateUniqueFileName().concat('.mp3');
+    fs.writeFileSync('./public/'.concat(filename), Buffer.from(audio));
+    return filename;
   }
 }
 

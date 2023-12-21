@@ -96,7 +96,8 @@ export const Story = () => {
     setAudioTime(audioRef.current.currentTime);
     getFollowUp(story.story, questions).then((res) => {
       // set audioRef src to new audio
-      audioRef.current.src = res.audio;
+      console.log(res.data);
+      audioRef.current.src = res.data;
       audioRef.current.play();
       isloading(false);
     });
