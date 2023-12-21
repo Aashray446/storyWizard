@@ -27,7 +27,8 @@ export const Mike = () => {
     setLoading(true);
     generateStory(textInput).then((res) => {
       setLoading(false);
-      navigate("/story/" + res.id);
+      console.log(res);
+      navigate("/story/" + res);
     });
     handleCloseModal();
   };

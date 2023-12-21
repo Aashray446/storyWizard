@@ -14,15 +14,21 @@ const storySchema = new mongoose.Schema<IStoryDoc, IStoryModel>(
       type: String,
       required: true,
     },
-    imgUrl: {
+    moral: {
+      type: String,
+      required: true,
+    },
+    image: {
       type: String,
     },
     audioUrl: {
       type: String,
+      required: false,
     },
     generatedBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      default: null,
     },
   },
   {

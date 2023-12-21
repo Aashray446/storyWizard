@@ -44,6 +44,9 @@ app.use(compression());
 app.use(passport.initialize());
 passport.use('jwt', jwtStrategy);
 
+// public routes
+app.use(express.static('public'));
+
 // limit repeated failed requests to auth endpoints
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);

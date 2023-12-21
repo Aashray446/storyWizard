@@ -6,6 +6,8 @@ import ApiError from '../errors/ApiError';
 import pick from '../utils/pick';
 import { IOptions } from '../paginate/paginate';
 import * as storyService from './story.service';
+import { logger } from '../logger';
+// import { logger } from '../logger';
 
 export const createStory = catchAsync(async (req: Request, res: Response) => {
   const story = await storyService.createStory(req.body);
@@ -20,13 +22,17 @@ export const getStories = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const getStory = catchAsync(async (req: Request, res: Response) => {
-  if (typeof req.params['storyId'] === 'string') {
-    const story = await storyService.getStoryById(new mongoose.Types.ObjectId(req.params['storyId']));
+  if (typeof req.params['id'] === 'string') {
+    const story = await storyService.getStoryById(new mongoose.Types.ObjectId(req.params['id']));
     if (!story) {
       throw new ApiError(httpStatus.NOT_FOUND, 'Story not found');
     }
+    logger.info(story);
     res.send(story);
+    return;
   }
+
+  res.sendStatus(httpStatus.BAD_REQUEST);
 });
 
 export const updateStory = catchAsync(async (req: Request, res: Response) => {
@@ -52,7 +58,23 @@ export const getUserStories = catchAsync(async (req: Request, res: Response) => 
   }
 });
 
-export const generateStory = catchAsync(async (req: Request, res: Response) => {
+export const genereateStory = catchAsync(async (req: Request, res: Response) => {
+  // TODO : Optimize the API calls
   const story = await storyService.generateStory(req.body.storyTopic);
-  res.status(httpStatus.CREATED).send(story);
+  if (!story) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Error generating story');
+  }
+  logger.info(story);
+  const image = await storyService.generateImageDallE(story.story);
+  story.image = image;
+  const respone = await storyService.createStory(story);
+  res.send(respone.id);
+});
+
+export const generateImage = catchAsync(async (req: Request, res: Response) => {
+  res.send(await storyService.generateImageDallE(req.body.storyTopic));
+});
+
+export const answerQuestion = catchAsync(async (req: Request, res: Response) => {
+  res.send(await storyService.askQuestion(req.body.storyTopic, req.body.question));
 });

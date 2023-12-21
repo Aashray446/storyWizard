@@ -3,7 +3,8 @@ import httpStatus from 'http-status';
 import Story from './story.model';
 import { IStoryDoc } from './story.interfaces';
 import { ApiError } from '../errors';
-import { IStoryGeneratorResponse, storyGenerator } from '../chatbot';
+import { IStoryGeneratorResponse, storyGenerator, Dalle3, questionAnswering, AudioEngine } from '../chatbot';
+import { logger } from '../logger';
 
 /**
  * Create a story
@@ -23,6 +24,27 @@ export const createStory = async (storyBody: any): Promise<IStoryDoc> => {
 export const generateStory = async (storyTopic: string): Promise<IStoryGeneratorResponse> => {
   const story = await storyGenerator.getChatResponse(storyTopic);
   return story;
+};
+
+/**
+ * Ask a question
+ * @param {string} question,
+ * @param {string} story
+ * @returns {Promise<String>}
+ * @throws {ApiError}
+ *
+ * */
+export const askQuestion = async (question: string, story: string): Promise<string> => {
+  const questionResponse = await questionAnswering.getChatResponse(`Q: ${question}\nA: ${story}\nQ:`);
+  if (!questionResponse) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Error generating story');
+  }
+  /**
+   * {"response": "The moral of the story is that it's important to appreciate and be grateful for the things we have, even if they seem ordinary or familiar. It's easy to take things for granted, but we should always remember to be thankful for the special and wonderful things in our lives."}
+   */
+  const audio = await AudioEngine.generateAudio(questionResponse.response);
+  logger.info(`Audio generated: ${audio}`);
+  return audio;
 };
 
 /**
@@ -80,4 +102,18 @@ export const deleteStoryById = async (storyId: mongoose.Types.ObjectId): Promise
 
 export const getStoryByUserId = async (userId: string): Promise<IStoryDoc[]> => {
   return Story.find({ generatedBy: userId });
+};
+
+/**
+ * Generate image via Dall E OpenAI
+ * @param {string} prompt
+ * @returns {Promise<any>}
+ * @throws {ApiError}
+ *
+ */
+export const generateImageDallE = async (prompt: string): Promise<any> => {
+  // return Dalle3.generateImages(prompt, '1792x1024');
+  const imageData = await Dalle3.generateImages(prompt, '1024x1024');
+  logger.info(imageData);
+  return imageData.data[0].url;
 };

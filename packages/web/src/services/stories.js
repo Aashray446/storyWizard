@@ -8,24 +8,29 @@ const unqiueSessionId = () => {
 const sessionId = unqiueSessionId();
 
 export const fetchStories = async () => {
-    const count = await getStoryCount();
-    const response = await fetch(`${baseUrl}/get_n_stories?n=${count}`);
-    const stories = await response.json();
-    return stories;
+    const response = await axios.get(`${baseUrl}/stories/getStories`);
+    return response.data.results;
 }
 
 
 export const getStory = async (storyId) => {
-    const response = await fetch(`${baseUrl}/get_story?id=${storyId}`);
-    const story = await response.json();
-    return story;
+    const response = await axios.get(`${baseUrl}/stories/getStory/${storyId}`);
+    console.log(response.data);
+    return response.data;
 }
 
-
+/**
+ * 
+ * @param {string} topic 
+ * @returns {Promise<Story>} story - A story object
+ * @typedef {Object} Story
+ * @property {string} moral - The moral of the story
+ * @property {string} story - The story
+ * @property {string} title - The title of the story
+ */
 export const generateStory = async (topic) => {
-    const response = await fetch(`${baseUrl}/generate?topic=${topic}`);
-    const story = await response.json();
-    return story;
+    const response = await axios.post(`${baseUrl}/stories/generateStory`, { storyTopic: topic });
+    return response.data;
 }
 
 const getStoryCount = async () => {
@@ -44,9 +49,10 @@ export const askFollowUp = async (storyId, audio, sessionId) => {
     return data;
 }
 
-export const getFollowUp = async (storyId, question) => {
-    const response = await axios.get(`${baseUrl}/get_followup?story_id=${storyId}&question=${question}&session_id=${sessionId}`);
-    const data = await response.data;
-    console.log(data);
-    return data;
+export const getFollowUp = async (story, question) => {
+    const response = await axios.post(`${baseUrl}/stories/answer-questions`, {
+        question: question,
+        storyTopic: story,
+    });
+    return response;
 }

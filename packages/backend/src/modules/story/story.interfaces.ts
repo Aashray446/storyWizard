@@ -4,7 +4,8 @@ import { QueryResult } from '../paginate/paginate';
 export interface IStory {
   title: string;
   story: string;
-  imgUrl: string;
+  moral: string;
+  image: string;
   audioUrl: string;
   generatedBy: mongoose.Types.ObjectId;
 }

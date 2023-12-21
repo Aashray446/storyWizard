@@ -66,9 +66,8 @@ export const Story = () => {
 
   useLayoutEffect(() => {
     getStory(id).then((res) => {
-      setStory(res.story[0]);
-      setStoryLines(res.story[0].story.split("\n\n"));
-      console.log(story);
+      setStory(res);
+      console.log(res);
     });
   }, []);
 
@@ -95,7 +94,7 @@ export const Story = () => {
     e.preventDefault();
     isloading(true);
     setAudioTime(audioRef.current.currentTime);
-    getFollowUp(id, questions).then((res) => {
+    getFollowUp(story.story, questions).then((res) => {
       // set audioRef src to new audio
       audioRef.current.src = res.audio;
       audioRef.current.play();
@@ -114,7 +113,7 @@ export const Story = () => {
       <div className="grid lg:grid-cols-5 gap-4 grid-cols-1 font-poiret_one mx-10 min-h-screen sm:max-h-fit">
         <div className="lg:col-span-2 flex justify-center">
           <img
-            src={story.img}
+            src={story.image}
             className="rounded-lg w-full lg:h-2/3 sm:h-full"
             alt="The Lion King"
           />
@@ -122,15 +121,9 @@ export const Story = () => {
         <div className="lg:col-span-3">
           <div className="text-center lg:text-xl text-sm text-white">
             <h1 className="text-4xl font-bold text-white">{story.title}</h1>
-            {/* <p className="text-xl">{story.story}</p> */}
-            {storyLines &&
-              storyLines.map((line, index) => {
-                return (
-                  <p key={index} className="text-2xl my-5">
-                    {line}
-                  </p>
-                );
-              })}
+            <p className="text-xl">{story.story}</p>
+
+            <h4 className="text-1xl mt-8"><span className="font-bold">Moral: </span>{story.moral}</h4>
           </div>
         </div>
       </div>

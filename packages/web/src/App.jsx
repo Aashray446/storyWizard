@@ -8,7 +8,8 @@ function App() {
 
   useLayoutEffect(() => {
     fetchStories().then((res) => {
-      setStories(res.stories);
+      console.log(res);
+      setStories(res);
     });
   }, []);
 
@@ -17,14 +18,14 @@ function App() {
       <div className="col-span-2" style={{ height: "100vh" }}>
         <Mike></Mike>
       </div>
-      <div className="col-span-3 text-white h-[87vh] overflow-y-scroll">
+      <div className="col-span-3 text-white h-[87vh] overflow-y-scroll hide-scrollbar ">
         <div className="col-span-3 grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 w-full text-white px-5">
           {stories?.map((story) => (
             <StoryCard
               key={story.id}
               id={story.id}
               heading={story.title}
-              imgSrc={story.img}
+              imgSrc={story.image}
               content={story.story}
             ></StoryCard>
           ))}
